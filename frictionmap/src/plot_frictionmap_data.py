@@ -102,10 +102,10 @@ def plot_tpamap_fromVariable(tpa_map: cKDTree,
     # recalculate width of grid cells of friction map (width is set by the user during map generation)
     cellwidth_m = max(abs(tpa_map.data[0] - tpa_map.data[1]))
 
-    plt.figure()
-    plt.plot(refline[:, 0], refline[:, 1], 'r')
-    plt.plot(trackbound_left[:, 0], trackbound_left[:, 1], 'b')
-    plt.plot(trackbound_right[:, 0], trackbound_right[:, 1], 'b')
+    # plt.figure()
+    # plt.plot(refline[:, 0], refline[:, 1], 'r')
+    plt.plot(trackbound_left[:, 0], trackbound_left[:, 1], 'k')
+    plt.plot(trackbound_right[:, 0], trackbound_right[:, 1], 'k')
 
     plt.axis('equal')
     plt.xlim(np.amin(refline[:, 0]) - 100.0, np.amax(refline[:, 0]) + 100.0)
@@ -144,14 +144,15 @@ def plot_tpamap_fromVariable(tpa_map: cKDTree,
 
     # create a colorbar for the ContourSet returned by the contourf call
     cbar = plt.colorbar(con, cmap='viridis')
+    # cbar = plt.colorbar(con, cmap='Qualitative')
     cbar.set_ticks(cbar_tickrange.round(2).tolist())
     cbar.set_label(cbar_label)
 
-    plt.title('friction map and data')
-    plt.xlabel('x in meters')
-    plt.ylabel('y in meters')
+    # plt.title('friction map and data')
+    # plt.xlabel('x in meters')
+    # plt.ylabel('y in meters')
 
-    plt.show()
+    # plt.show()
 
 
 # ----------------------------------------------------------------------------------------------------------------------

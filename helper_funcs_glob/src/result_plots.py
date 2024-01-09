@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import trajectory_planning_helpers
+import frictionmap
 
 
 def result_plots(plot_opts: dict,
@@ -49,6 +50,7 @@ def result_plots(plot_opts: dict,
 
         # plot track including optimized path
         plt.figure()
+        
         plt.plot(refline[:, 0], refline[:, 1], "k--", linewidth=0.7)
         plt.plot(veh_bound1_virt[:, 0], veh_bound1_virt[:, 1], "b", linewidth=0.5)
         plt.plot(veh_bound2_virt[:, 0], veh_bound2_virt[:, 1], "b", linewidth=0.5)
@@ -56,7 +58,7 @@ def result_plots(plot_opts: dict,
         plt.plot(veh_bound2_real[:, 0], veh_bound2_real[:, 1], "c", linewidth=0.5)
         plt.plot(bound1_interp[:, 0], bound1_interp[:, 1], "k-", linewidth=0.7)
         plt.plot(bound2_interp[:, 0], bound2_interp[:, 1], "k-", linewidth=0.7)
-        plt.plot(trajectory[:, 1], trajectory[:, 2], "r-", linewidth=0.7)
+        plt.plot(trajectory[:, 1], trajectory[:, 2], "r-", linewidth=1)
 
         if plot_opts["imported_bounds"] and bound1_imp is not None and bound2_imp is not None:
             plt.plot(bound1_imp[:, 0], bound1_imp[:, 1], "y-", linewidth=0.7)
@@ -69,6 +71,20 @@ def result_plots(plot_opts: dict,
         ax.set_aspect("equal", "datalim")
         plt.xlabel("east in m")
         plt.ylabel("north in m")
+        
+
+        # plt.show()
+
+        track_name = 'berlin_2018'
+        filename_tpamap = 'berlin_2018_tpamap.csv'
+        filename_tpadata = 'berlin_2018_tpadata.json'
+        # filename_tpadata = 'berlin_2018_varmue08-12_tpadata.json'
+
+        # track_name = 'modena_2019'
+        # filename_tpamap = 'modena2019_tpamap.csv'
+        # filename_tpadata = 'modena2019_tpadata.json'
+        frictionmap.src.plot_frictionmap_data.plot_tpamap_fromFile(track_name, filename_tpamap, filename_tpadata)
+
         plt.show()
 
     if plot_opts["raceline_curv"]:

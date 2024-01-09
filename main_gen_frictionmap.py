@@ -140,7 +140,25 @@ timer_start = time.perf_counter()
 
 # create dictionary filled with default mue value (value as numpy array)
 tpamap_indices = tpa_map.indices
-tpa_data = dict(zip(tpamap_indices, np.full((tpamap_indices.shape[0], 1), initial_mue)))
+mue = []
+x_min = math.floor(min(tpa_map.data[:, 0]))
+x_max = math.ceil(max(tpa_map.data[:, 0]))
+
+y_min = math.floor(min(tpa_map.data[:, 1]))
+y_max = math.ceil(max(tpa_map.data[:, 1]))
+
+x_vals = np.arange(x_min - 10.0, x_max + 9.5, cellwidth_m)
+y_vals = np.arange(y_min - 10.0, y_max + 9.5, cellwidth_m)
+for i in tpamap_indices:
+    index_column = int((tpa_map.data[i, 0] - min(x_vals)) / cellwidth_m)
+    index_row = int((-1 * tpa_map.data[i, 1] + max(y_vals)) / cellwidth_m)
+    if( index_column < 100):
+        mue.append(0.9)
+    elif ( index_column > 200):
+        mue.append(0.7)
+    else:
+        mue.append(initial_mue)
+tpa_data = dict(zip(tpamap_indices, np.array(mue).reshape(-1,1)))
 
 print('INFO: Time elapsed for tpa_data dictionary building: {:.3f}s'.format(time.perf_counter() - timer_start))
 

@@ -39,8 +39,8 @@ plot_opts = {"mincurv_curv_lin": False,         # plot curv. linearization (orig
 
 # select track file (including centerline coordinates + track widths) --------------------------------------------------
 # file_paths["track_name"] = "rounded_rectangle"                              # artificial track
-# file_paths["track_name"] = "handling_track"                                 # artificial track
-file_paths["track_name"] = "berlin_2018"                                    # Berlin Formula E 2018
+# file_paths["track_name"] = "handling_track"                                 # artificial track  
+file_paths["track_name"] = "berlin_2018"                                 # Berlin Formula E 2018
 # file_paths["track_name"] = "modena_2019"                                    # Modena 2019
 
 # set import options ---------------------------------------------------------------------------------------------------
@@ -67,9 +67,16 @@ opt_type = 'mintime'
 # reopt_mintime_solution:       reoptimization of the mintime solution by min. curv. opt. for improved curv. smoothness
 # recalc_vel_profile_by_tph:    override mintime velocity profile by ggv based calculation (see TPH package)
 
-mintime_opts = {"tpadata": None,
-                "warm_start": False,
-                "var_friction": None,
+# mintime_opts = {"tpadata": "20240108_172556_modena_2019_tpadata",
+#                 "warm_start": False,
+#                 "var_friction": None,
+#                 "reopt_mintime_solution": False,
+#                 "recalc_vel_profile_by_tph": False}
+
+# "berlin_2018_varmue08-12_tpadata"
+mintime_opts = {"tpadata": "berlin_2018_tpadata.json",
+                "warm_start": True,
+                "var_friction": "gauss",
                 "reopt_mintime_solution": False,
                 "recalc_vel_profile_by_tph": False}
 
@@ -148,7 +155,7 @@ if opt_type == 'mintime':
 # assemble export paths
 file_paths["mintime_export"] = os.path.join(file_paths["module"], "outputs", "mintime")
 file_paths["traj_race_export"] = os.path.join(file_paths["module"], "outputs", "traj_race_cl.csv")
-# file_paths["traj_ltpl_export"] = os.path.join(file_paths["module"], "outputs", "traj_ltpl_cl.csv")
+file_paths["traj_ltpl_export"] = os.path.join(file_paths["module"], "outputs", "traj_ltpl_cl.csv")
 file_paths["lap_time_mat_export"] = os.path.join(file_paths["module"], "outputs", lap_time_mat_opts["file"])
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -581,3 +588,5 @@ helper_funcs_glob.src.result_plots.result_plots(plot_opts=plot_opts,
                                                 bound1_interp=bound1,
                                                 bound2_interp=bound2,
                                                 trajectory=trajectory_opt)
+
+
